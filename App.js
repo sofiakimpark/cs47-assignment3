@@ -3,25 +3,35 @@ import { useSpotifyAuth } from "./utils";
 import { Themes } from "./assets/Themes";
 import SpotifyAuthButton from "./components/SpotifyAuthButton";
 import SongList from "./components/SongList";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
+import HomeScreen from "./screens/HomeScreen";
+import DetailsScreen from "./screens/DetailsScreen";
+import PreviewScreen from "./screens/PreviewScreen";
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  // Pass in true to useSpotifyAuth to use the album ID (in env.js) instead of top tracks
-  const { token, tracks, getSpotifyAuth } = useSpotifyAuth();
-
-  console.log("tracks", tracks);
-  let contentDisplayed = null;
-
-  if (token) {
-    contentDisplayed = <SongList tracks={tracks}/>;
-  } else {
-    contentDisplayed = <SpotifyAuthButton authenticationFunction={getSpotifyAuth}/>;
-  }
-
   return (
-    <SafeAreaView style={styles.container}>
-      {contentDisplayed}
-      {/* <Text onPress={getSpotifyAuth}>Fetch</Text> */}
-    </SafeAreaView>
+  <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="HomeScreen" component={HomeScreen} options={{
+    headerShown: false,
+      }}/>
+      <Stack.Screen name="DetailsScreen" component={DetailsScreen} 
+      options={{
+        headerStyle: { backgroundColor: 'black'},
+        headerTitleStyle: { color: 'white' },
+      }}/>
+      <Stack.Screen name="PreviewScreen" component={PreviewScreen}
+      options={{
+        headerStyle: { backgroundColor: 'black'},
+        headerTitleStyle: { color: 'white' },
+      }}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 

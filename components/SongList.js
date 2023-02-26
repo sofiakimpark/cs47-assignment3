@@ -15,14 +15,16 @@ const songArtists = ({item}) => {
 };
 
 
-const renderTrackItem = ({item, index}) => (
+const renderTrackItem = ({item}) => (
     <TrackItem 
         albumName={item.albumName}
         duration={item.duration}
         imageUrl={item.imageUrl}
         songArtists={item.songArtists}
         songTitle={item.songTitle}
-        id={index + 1}
+        previewUrl={item.previewUrl}
+        externalUrl={item.externalUrl}
+
     />
 );
 

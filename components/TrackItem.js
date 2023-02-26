@@ -1,19 +1,27 @@
 import { View, StyleSheet, Text, Image} from "react-native";
 import { millisToMinutesAndSeconds } from "../utils";
 import { Themes } from "../assets/Themes";
+import { Ionicons } from '@expo/vector-icons';
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function TrackItem({albumName, duration, imageUrl, 
-    songArtists, songTitle, id }) {
+    songArtists, songTitle, previewUrl, externalUrl}) {
+        const navigation = useNavigation();
         return (
             <View style={styles.tracks}>
-                <View style={styles.index}>
-                    <Text style={styles.text}>{id}</Text>
-                </View>
+                
+                <Pressable onPress={() => navigation.navigate('PreviewScreen', {previewUrl})}>
+                    <Ionicons name="play-circle" size={22} color="green"/>
+                </Pressable>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{uri: imageUrl}}/>
                 </View>
                 <View style={styles.title}>
+                    <Pressable onPress={() => navigation.navigate('DetailsScreen', {externalUrl})}>
                         <Text style={styles.text} numberOfLines={1}>{songTitle}</Text>
+                    </Pressable>
                         <View>
                             {songArtists.map((item) => {
                                 return (
@@ -48,6 +56,7 @@ export default function TrackItem({albumName, duration, imageUrl,
             width: 50,
             height: 50,
             resizeMode: 'contain',
+            marginLeft: 5,
         },
         duration: {
             width: "17%",
